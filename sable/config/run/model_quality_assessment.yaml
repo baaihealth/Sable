@@ -1,0 +1,22 @@
+# @package _global_
+
+defaults:
+  - override /module: model_quality_assessment
+  - override /data: model_quality_assessment
+  - _self_
+
+callbacks:
+  model_checkpoint:
+    mode: "max" # the AAR metric should be "max" here
+    monitor: "valid/lddt_pearson"
+
+tags:
+  model_quality_assessment: 1
+
+task_name: "model_quality_assessment"
+
+test: True
+
+trainer:
+  max_epochs: 10
+

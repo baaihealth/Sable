@@ -1,0 +1,57 @@
+# @package _global_
+
+defaults:
+  - callbacks: sable
+  - data: sable
+  - extras: default
+  - hydra: default
+  - logger: wandb
+  - module: sable
+  - paths: default
+  - _self_
+  - run: sable
+  - debug: null
+
+atom_level: 4
+
+ckpt_path: null
+
+dataset: "sable"
+
+logger:
+  wandb:
+    entity: "baai-health-team"
+    group: "sable"
+    name: ${task_name}
+    project: "sable"
+    tags: ${tags}
+
+paths:
+  data_dir: "/home/sable/data"
+  log_dir: "/home/sable/output"
+
+seed: 42
+
+tags:
+  sable: 1
+
+train: True
+
+trainer:
+  _target_: lightning.pytorch.trainer.Trainer
+  accelerator: "gpu"
+  accumulate_grad_batches: 1
+  check_val_every_n_epoch: 1
+  default_root_dir: ${paths.output_dir}
+  deterministic: False
+  devices: 8
+  gradient_clip_algorithm: "norm"
+  gradient_clip_val: 1
+  num_sanity_val_steps: 0
+  precision: 32
+  reload_dataloaders_every_n_epochs: 1000000
+  use_distributed_sampler: True
+  strategy:
+    _target_: lightning.pytorch.strategies.DDPStrategy
+    find_unused_parameters: False
+

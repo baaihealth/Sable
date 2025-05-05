@@ -1,0 +1,58 @@
+
+_target_: sable.module.enzyme-catalyzed_reaction_classification_module.EnzymeCatalyzedReactionClassificationModule
+
+loss:
+  _target_: sable.loss.loss.EnzymeCatalyzedReactionClassificationLoss
+
+model:
+  _target_: sable.model.model.EnzymeCatalyzedReactionClassification
+  config:
+    sable:
+      atom_level: ${atom_level}
+      activation_dropout: 0.0
+      activation_fn: "gelu"
+      attention_dropout: 0.1
+      dropout: 0.1
+      emb_dropout: 0.1
+      encoder_attention_heads: 128
+      encoder_embed_dim: 512
+      encoder_ffn_embed_dim: 2048
+      encoder_layers: 15
+      loss_distance_scalar: -1
+      loss_residue_scalar: -1
+      post_ln: False
+
+optimizer:
+  _partial_: True
+  _target_: torch.optim.Adam
+  betas: [0.9, 0.99]
+  eps: 1e-6
+
+sable_config:
+  atom_level: ${atom_level}
+  loss_config:
+    atom_level: ${atom_level}
+    loss_distance_scalar: ${module.sable_config.model_config.loss_distance_scalar}
+    loss_residue_scalar: ${module.sable_config.model_config.loss_residue_scalar}
+  model_config:
+    atom_level: ${atom_level}
+    activation_dropout: 0.0
+    activation_fn: "gelu"
+    attention_dropout: 0.1
+    dropout: 0.1
+    emb_dropout: 0.1
+    encoder_attention_heads: 128
+    encoder_embed_dim: 512
+    encoder_ffn_embed_dim: 2048
+    encoder_layers: 15
+    loss_distance_scalar: 1
+    loss_residue_scalar: 1
+    post_ln: False
+
+scheduler:
+  _partial_: True
+  _target_: sable.optim.lr_scheduler.SableLRScheduler
+  max_lr: 5e-4
+  buffer: ${trainer.max_epochs}
+  warmup_ratio: 0.06
+

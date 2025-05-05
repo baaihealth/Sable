@@ -1,0 +1,51 @@
+
+_target_: sable.data.data_module.SableDataModule
+
+batch_size: 8
+
+num_workers: 4
+
+train_dataset:
+  _target_: sable.data.data_module.SableDataset
+  data_factory:
+    _target_: sable.data.data_factory.ProteinDesignDataFactory
+    config:
+      atom_level: ${atom_level}
+      crop:
+        crop_size: 256
+        spatial_crop_ratio: 0.5
+      seed: ${seed}
+  data_path: ${paths.data_dir}/protein_design/${dataset}/train.lmdb
+  epoch_len: -1
+  persist_in_ram: True
+
+eval_dataset:
+  _target_: sable.data.data_module.SableDataset
+  data_factory:
+    _target_: sable.data.data_factory.ProteinDesignDataFactory
+    config:
+      atom_level: ${atom_level}
+  data_path: ${paths.data_dir}/protein_design/${dataset}/eval.lmdb
+  epoch_len: -1
+  persist_in_ram: True
+
+test_datasets:
+  -
+    _target_: sable.data.data_module.SableDataset
+    data_factory:
+      _target_: sable.data.data_factory.ProteinDesignDataFactory
+      config:
+        atom_level: ${atom_level}
+    data_path: ${paths.data_dir}/protein_design/CATH/test.lmdb
+    epoch_len: -1
+    persist_in_ram: True
+  -
+    _target_: sable.data.data_module.SableDataset
+    data_factory:
+      _target_: sable.data.data_factory.ProteinDesignDataFactory
+      config:
+        atom_level: ${atom_level}
+    data_path: ${paths.data_dir}/protein_design/TS50/test.lmdb
+    epoch_len: -1
+    persist_in_ram: True
+

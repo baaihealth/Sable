@@ -1,0 +1,50 @@
+
+_target_: sable.data.data_module.SableDataModule
+
+batch_size: 2
+
+num_workers: 4
+
+train_dataset:
+  _target_: sable.data.data_module.SableDataset
+  data_factory:
+    _target_: sable.data.data_factory.BindingAffinityDataFactory
+    config:
+      atom_level: ${atom_level}
+      crop:
+        crop_size: 256
+        spatial_crop_ratio: 0.5
+      seed: ${seed}
+  data_path: ${paths.data_dir}/binding_affinity/${dataset}/train.lmdb
+  epoch_len: -1
+  persist_in_ram: True
+
+eval_dataset:
+  _target_: sable.data.data_module.SableDataset
+  data_factory:
+    _target_: sable.data.data_factory.BindingAffinityDataFactory
+    config:
+      atom_level: ${atom_level}
+      crop:
+        crop_size: 256
+        spatial_crop_ratio: 0.5
+      seed: ${seed}
+  data_path: ${paths.data_dir}/binding_affinity/${dataset}/eval.lmdb
+  epoch_len: -1
+  persist_in_ram: True
+
+test_datasets:
+  -
+    _target_: sable.data.data_module.SableDataset
+    data_factory:
+      _target_: sable.data.data_factory.BindingAffinityDataFactory
+      config:
+        atom_level: ${atom_level}
+        crop:
+          crop_size: 256
+          spatial_crop_ratio: 0.5
+        seed: ${seed}
+    data_path: ${paths.data_dir}/binding_affinity/${dataset}/test.lmdb
+    epoch_len: -1
+    persist_in_ram: True
+

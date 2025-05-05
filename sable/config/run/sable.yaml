@@ -1,0 +1,15 @@
+# @package _global_
+
+callbacks:
+  model_checkpoint:
+    mode: "max" # the AAR metric should be "max" here
+    monitor: "valid/AAR"
+
+parameter_init:
+  _target_: sable.util.init.variance_init
+
+task_name: "sable"
+
+trainer:
+  max_epochs: 500
+

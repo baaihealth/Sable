@@ -1,0 +1,24 @@
+# @package _global_
+
+defaults:
+  - override /module: protein_design
+  - override /data: protein_design
+  - _self_
+
+callbacks:
+  model_checkpoint:
+    mode: "max" # the AAR metric should be "max" here
+    monitor: "valid/AAR"
+
+dataset: "CATH"
+
+tags:
+  protein_design: 1
+
+task_name: "protein_design"
+
+test: True
+
+trainer:
+  max_epochs: 20
+

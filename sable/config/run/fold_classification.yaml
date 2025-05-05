@@ -1,0 +1,22 @@
+# @package _global_
+
+defaults:
+  - override /module: fold_classification
+  - override /data: fold_classification
+  - _self_
+
+callbacks:
+  model_checkpoint:
+    mode: "max" # the AAR metric should be "max" here
+    monitor: "valid/accuracy"
+
+tags:
+  fold_classification: 1
+
+task_name: "fold_classification"
+
+test: True
+
+trainer:
+  max_epochs: 100
+

@@ -1,0 +1,29 @@
+channels:
+  - pytorch
+  - conda-forge
+  - nvidia
+  - bioconda
+dependencies:
+  - python==3.10.*
+  - pytorch==2.2.1
+  - pytorch-cuda=12.1
+  - lightning==2.2.1
+  - torchvision
+  - torchaudio
+  - torchmetrics
+  - hydra-core
+  - rich
+  - pip
+  - hydra-colorlog
+  - biopython
+  - ml-collections
+  - einops
+  - scipy
+  - wandb
+  - numpy==1.26.4
+  - tqdm
+  - typing-extensions
+  - lddt
+  - pip:
+    - lmdb
+    - rootutils

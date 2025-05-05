@@ -1,0 +1,41 @@
+
+_target_: sable.data.data_module.SableDataModule
+
+batch_size: 4
+
+num_workers: 4
+
+train_dataset:
+  _target_: sable.data.data_module.SableDataset
+  data_factory:
+    _target_: sable.data.data_factory.SableDataFactory
+    config:
+      atom_level: ${atom_level}
+      crop:
+        crop_size: 256
+        spatial_crop_ratio: 0.5
+      mask:
+        fake_p: 0.05
+        kept_p: 0.05
+      seed: ${seed}
+  data_path: ${paths.data_dir}/sable/train.lmdb
+  epoch_len: -1
+  persist_in_ram: True
+
+eval_dataset:
+  _target_: sable.data.data_module.SableDataset
+  data_factory:
+    _target_: sable.data.data_factory.SableDataFactory
+    config:
+      atom_level: ${atom_level}
+      crop:
+        crop_size: 256
+        spatial_crop_ratio: 0.5
+      mask:
+        fake_p: 0.05
+        kept_p: 0.05
+      seed: ${seed}
+  data_path: ${paths.data_dir}/sable/eval.lmdb
+  epoch_len: -1
+  persist_in_ram: True
+

@@ -1,0 +1,22 @@
+# @package _global_
+
+defaults:
+  - override /module: enzyme-catalyzed_reaction_classification
+  - override /data: enzyme-catalyzed_reaction_classification
+  - _self_
+
+callbacks:
+  model_checkpoint:
+    mode: "max" # the AAR metric should be "max" here
+    monitor: "valid/accuracy"
+
+tags:
+  enzyme-catalyzed_reaction_classification: 1
+
+task_name: "enzyme-catalyzed_reaction_classification"
+
+test: True
+
+trainer:
+  max_epochs: 100
+

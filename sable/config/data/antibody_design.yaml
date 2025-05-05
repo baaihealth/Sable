@@ -1,0 +1,53 @@
+
+_target_: sable.data.data_module.SableDataModule
+
+batch_size: ${cdr_dict.${dataset}.batch_size}
+
+num_workers: 4
+
+train_dataset:
+  _target_: sable.data.data_module.SableDataset
+  data_factory:
+    _target_: sable.data.data_factory.AntibodyDesignDataFactory
+    config:
+      atom_level: ${atom_level}
+      cdr_mask: ${cdr_dict.${dataset}.cdr_mask}
+      crop:
+        crop_size: 384
+        spatial_crop_ratio: 0.5
+      seed: ${seed}
+  data_path: ${paths.data_dir}/antibody_design/${dataset}/train.lmdb
+  epoch_len: -1
+  persist_in_ram: True
+
+eval_dataset:
+  _target_: sable.data.data_module.SableDataset
+  data_factory:
+    _target_: sable.data.data_factory.AntibodyDesignDataFactory
+    config:
+      atom_level: ${atom_level}
+      cdr_mask: ${cdr_dict.${dataset}.cdr_mask}
+      crop:
+        crop_size: 384
+        spatial_crop_ratio: 0.5
+      seed: ${seed}
+  data_path: ${paths.data_dir}/antibody_design/${dataset}/eval.lmdb
+  epoch_len: -1
+  persist_in_ram: True
+
+test_datasets:
+  -
+    _target_: sable.data.data_module.SableDataset
+    data_factory:
+      _target_: sable.data.data_factory.AntibodyDesignDataFactory
+      config:
+        atom_level: ${atom_level}
+        cdr_mask: ${cdr_dict.${dataset}.cdr_mask}
+        crop:
+          crop_size: 2000
+          spatial_crop_ratio: 0.5
+        seed: ${seed}
+    data_path: ${paths.data_dir}/antibody_design/${dataset}/test.lmdb
+    epoch_len: -1
+    persist_in_ram: True
+

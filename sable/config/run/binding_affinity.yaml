@@ -1,0 +1,24 @@
+# @package _global_
+
+defaults:
+  - override /module: binding_affinity
+  - override /data: binding_affinity
+  - _self_
+
+callbacks:
+  model_checkpoint:
+    mode: "max" # the AAR metric should be "max" here
+    monitor: "valid/pearson"
+
+dataset: "M1101"
+
+tags:
+  binding_affinity: 1
+
+task_name: "binding_affinity"
+
+test: True
+
+trainer:
+  max_epochs: 100
+

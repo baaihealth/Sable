@@ -1,0 +1,48 @@
+# @package _global_
+
+defaults:
+  - override /module: antibody_design
+  - override /data: antibody_design
+  - _self_
+
+callbacks:
+  model_checkpoint:
+    mode: "max" # the AAR metric should be "max" here
+    monitor: "valid/AAR"
+
+cdr_dict:
+  H1:
+    cdr_mask:
+      H: [1]
+    batch_size: 2
+    recycling: 0
+  H2:
+    cdr_mask:
+      H: [2]
+    batch_size: 2
+    recycling: 0
+  H3:
+    cdr_mask:
+      H: [3]
+    batch_size: 2
+    recycling: 0
+  RAbD:
+    cdr_mask:
+      Ag: []
+      H: [1, 2, 3]
+      L: [1, 2, 3]
+    batch_size: 1
+    recycling: 3
+
+dataset: "H1"
+
+tags:
+  antibody_design: 1
+
+task_name: "antibody_design"
+
+test: True
+
+trainer:
+  max_epochs: 100
+
